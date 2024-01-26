@@ -7,6 +7,7 @@ const {
   updateAPost,
   addAPost,
   deleteAPost,
+  getAPost,
 } = require("./controller/index");
 
 mongoose
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", getAllPosts);
+app.get("/:id", getAPost);
 app.post("/add/", addAPost);
 app.put("/updated/:id", updateAPost);
 app.delete("/delete/:id", deleteAPost);

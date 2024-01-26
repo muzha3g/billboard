@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
+
+@font-face {
+  font-family: naikaifont;
+  src: url(https://cdn.jsdelivr.net/gh/max32002/naikaifont@1.89/webfont/NaikaiFont-Regular.woff2)
+    format("woff2");
+}
+
+* {
+  font-family: "Single Day", naikaifont;
+  color: black;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

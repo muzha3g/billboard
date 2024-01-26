@@ -34,22 +34,21 @@ const updateAPost = async (req, res) => {
   try {
     const id = req.params.id;
     const { title, text } = req.body;
-    let currentPostToUpdate = await Post.findOneAndUpdate(
+
+    let updatedPost = await Post.findOneAndUpdate(
       { _id: id },
       { title, text },
-      { new: false }
+      { new: true }
     ).exec();
 
-    if (!currentPostToUpdate) {
-      return res.status(500).send("Unable to update");
+    if (!updatedPost) {
+      return res.status(404).send("Post not found");
     }
 
-    return res.status(200).send(currentPostToUpdate);
+    return res.status(200).json(updatedPost);
   } catch (e) {
-    console.log(e);
-    return res
-      .status(500)
-      .json({ message: "Something went wrong while updating" });
+    console.error("Error updating post:", e);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -67,4 +66,15 @@ const deleteAPost = async (req, res) => {
   }
 };
 
-module.exports = { getAllPosts, updateAPost, addAPost, deleteAPost };
+const getAPost = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const findPost = await Post.find({ _id: id }).exec();
+    return res.status(200).send(findPost);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Post not found");
+  }
+};
+
+module.exports = { getAllPosts, updateAPost, addAPost, deleteAPost, getAPost };

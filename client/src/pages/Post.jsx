@@ -19,7 +19,7 @@ function Post() {
     try {
       const response = isEdit
         ? await axios.put(
-            `http://localhost:4000/updated/${location.state.postData._id}`,
+            `http://localhost:4000/updated/${location.state.postData[0]._id}`,
             {
               title: formData.title,
               text: formData.text,
@@ -50,11 +50,12 @@ function Post() {
 
   useEffect(() => {
     if (location.state) {
+      console.log(location.state);
       const { postData } = location.state;
       setIsEdit(true);
       setFormData({
-        title: postData.title,
-        text: postData.text,
+        title: postData[0].title,
+        text: postData[0].text,
       });
     }
   }, [location]);

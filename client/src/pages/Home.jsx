@@ -42,7 +42,7 @@ function Home() {
               className="text-decoration-none font-dark"
             >
               <Card.Title>{post.title}</Card.Title>
-              <Card.Text>{post.text}</Card.Text>
+              <Card.Text className="cardText">{post.text}</Card.Text>
               <Card.Text>
                 @ <span>name</span>
                 <br />#{post.date.slice(5, 10)}

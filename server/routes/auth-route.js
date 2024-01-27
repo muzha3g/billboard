@@ -31,7 +31,7 @@ authRouter.post("/signup", async (req, res) => {
     return res.redirect("/auth/signup");
   }
 
-  let hashpassword = await new bcrypt.hash(passport, 12);
+  let hashpassword = await new bcrypt.hash(password, 12);
   let newUser = new User({ name, email, password: hashpassword });
   await newUser.save();
   return res.redirect("/login");

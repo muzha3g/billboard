@@ -8,6 +8,7 @@ const session = require("express-session");
 const dotenv = require("dotenv");
 dotenv.config();
 require("./config/passport");
+const passport = require("passport");
 
 mongoose
   .connect(

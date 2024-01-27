@@ -43,10 +43,7 @@ function Home() {
             >
               <Card.Title>{post.title}</Card.Title>
               <Card.Text className="cardText">{post.text}</Card.Text>
-              <Card.Text>
-                @ <span>name</span>
-                <br />#{post.date.slice(5, 10)}
-              </Card.Text>
+              <Card.Text>#{post.date.slice(5, 10)}</Card.Text>
             </Card.Link>
             <Card.Text>
               <Card.Link

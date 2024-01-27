@@ -2,7 +2,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
 const LocalStrategy = require("passport-local");
 const User = require("../model/user-model");
-const bcrypt = rrequire("bcrypt");
+const bcrypt = require("bcrypt");
 
 //user 會套 done()裡面的第二個參數，done 跟下面的 done() 無關係
 passport.serializeUser((user, done) => {

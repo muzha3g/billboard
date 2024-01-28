@@ -19,13 +19,13 @@ function Post() {
     try {
       const response = isEdit
         ? await axios.put(
-            `http://localhost:4000/updated/${location.state.postData[0]._id}`,
+            `http://localhost:4000/post/updated/${location.state.postData[0]._id}`,
             {
               title: formData.title,
               text: formData.text,
             }
           )
-        : await axios.post("http://localhost:4000/add", {
+        : await axios.post("http://localhost:4000/post/add", {
             title: formData.title,
             text: formData.text,
           });

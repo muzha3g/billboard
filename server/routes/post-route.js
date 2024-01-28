@@ -8,7 +8,7 @@ postRouter.use((req, res, next) => {
   next();
 });
 
-postRouter.post("/add/", addAPost);
+postRouter.post("/add", addAPost);
 postRouter.put("/updated/:id", updateAPost);
 postRouter.delete("/delete/:id", deleteAPost);
 

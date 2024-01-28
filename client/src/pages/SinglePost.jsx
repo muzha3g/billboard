@@ -62,17 +62,15 @@ function SinglePost() {
         </Card.Body>
       </Card>
       <div className="d-flex justify-content-center flex-wrap mt-4">
-        {postData[0].author === req.user.name && (
-          <Button
-            variant="primary"
-            type="submit"
-            className="fs-6 m-2 p-2"
-            size="sx"
-            onClick={editPost}
-          >
-            Edit post
-          </Button>
-        )}
+        <Button
+          variant="primary"
+          type="submit"
+          className="fs-6 m-2 p-2"
+          size="sx"
+          onClick={editPost}
+        >
+          Edit post
+        </Button>
 
         <Button
           variant="warning"
@@ -84,17 +82,16 @@ function SinglePost() {
         >
           Back to billboard
         </Button>
-        {postData[0].author === req.user.name && (
-          <Button
-            variant="danger"
-            type="submit"
-            className="fs-6 m-2 p-2"
-            size="sx"
-            onClick={deletePost}
-          >
-            Delete Post
-          </Button>
-        )}
+
+        <Button
+          variant="danger"
+          type="submit"
+          className="fs-6 m-2 p-2"
+          size="sx"
+          onClick={deletePost}
+        >
+          Delete Post
+        </Button>
       </div>
     </main>
   );

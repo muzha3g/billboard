@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Post from "./pages/Post";
 import SinglePost from "./pages/SinglePost";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   return (
@@ -14,7 +16,8 @@ const App = () => {
         <Route path="/" element={<Home />}></Route>
         <Route path="/post" element={<Post />}></Route>
         <Route path="/:id" element={<SinglePost />} />
-        <Route path="/login"></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/logout"></Route>
       </Routes>
     </>

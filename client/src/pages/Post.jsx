@@ -61,8 +61,8 @@ function Post() {
   }, [location]);
 
   return (
-    <main className="m-5 px-5">
-      <Form onSubmit={(e) => submitHandler(e)}>
+    <main className="d-flex justify-content-center mt-5 align-items-center">
+      <Form onSubmit={(e) => submitHandler(e)} style={{ width: "60%" }}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label className="fs-3">Title</Form.Label>
           <Form.Control
@@ -94,8 +94,8 @@ function Post() {
           <Button
             variant="warning"
             type="submit"
-            className="fs-4 mt-2"
-            size="ml"
+            className="fs-5 mt-2"
+            size="sm"
             disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Submit"}

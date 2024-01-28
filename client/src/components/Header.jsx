@@ -19,9 +19,9 @@ function Header() {
             <Nav.Link to="/post" as={Link} className="mx-2">
               Post
             </Nav.Link>
-            {/* <Nav.Link to="/login" as={Link} className="mx-2">
+            <Nav.Link to="/login" as={Link} className="mx-2">
               Login
-            </Nav.Link> */}
+            </Nav.Link>
           </div>
         </Nav>
       </Container>

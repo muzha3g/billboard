@@ -3,6 +3,33 @@ const GoogleStrategy = require("passport-google-oauth20");
 const LocalStrategy = require("passport-local");
 const User = require("../model/user-model");
 const bcrypt = require("bcrypt");
+// ======================
+let JwtStrategy = require("passport-jwt").Strategy;
+let ExtractJwt = require("passport-jwt").ExtractJwt; //把 token 的 jwt 部分拉出來
+
+module.exports = (passport) => {
+  let opts = {};
+  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
+  opts.secretOrKey = process.env.PASSPORT_SECRET;
+
+  passport.use(
+    new JwtStrategy(opts, async function (jwt_payload, done) {
+      console.log(jwt_payload); //有之前存入的資料，id 跟 email
+      try {
+        let foundUser = await User.findOne({ _id: jwt_payload._id }).exec();
+        if (foundUser) {
+          return done(null, foundUser); //讓 req.user 等於 foundUser
+        } else {
+          return done(null, false);
+        }
+      } catch (e) {
+        return done(e, false);
+      }
+    })
+  );
+};
+
+// =====================
 
 //user 會套 done()裡面的第二個參數，done 跟下面的 done() 無關係
 passport.serializeUser((user, done) => {
@@ -51,7 +78,7 @@ passport.use(
   new LocalStrategy(async (username, password, done) => {
     let foundUser = await User.findOne({ email: username });
     if (foundUser) {
-      let result = await bcrypt.compare(password, foundUser.password);
+      let result = bcrypt.compare(password, foundUser.password);
       if (result) {
         done(null, foundUser);
       } else {

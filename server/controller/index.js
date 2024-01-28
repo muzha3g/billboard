@@ -1,4 +1,5 @@
 const Post = require("../model/post-model");
+const postValidation = require("../validation").postValidation;
 
 const getAllPosts = async (req, res) => {
   try {
@@ -14,6 +15,10 @@ const getAllPosts = async (req, res) => {
 };
 
 const addAPost = async (req, res) => {
+  // 確認數據是否符合規範
+  let { error } = postValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
   try {
     const { title, text } = req.body;
     const currentDate = new Date();
@@ -21,6 +26,7 @@ const addAPost = async (req, res) => {
       title,
       text,
       date: currentDate,
+      author: req.user.name,
     });
     await newPost.save();
     return res.status(200).send(newPost);
@@ -31,6 +37,10 @@ const addAPost = async (req, res) => {
 };
 
 const updateAPost = async (req, res) => {
+  // 確認數據是否符合規範
+  let { error } = postValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
   try {
     const id = req.params.id;
     const { title, text } = req.body;

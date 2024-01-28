@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
-  title: { type: String, required: [true, "標題不能是空白 "] },
-  text: { type: String, required: [true, "內文不能是空白 "] },
+  id: String,
+  title: { type: String, required: true },
+  text: { type: String, required: true },
   date: Date,
+  author: { type: mongoose.Schema.Types.ObjectId, ref: "Post" }, //連接到 Post collection 的 ObjectId primary key
+  like: {
+    type: [String],
+    default: [],
+  },
 });
 
-const Post = mongoose.model("Post", PostSchema);
-module.exports = Post;
+module.exports = mongoose.model("Post", PostSchema);

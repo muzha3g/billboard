@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { InputGroup } from "react-bootstrap";
+import { InputGroup, Alert } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
+import AuthService from "../services/auth-service";
 
-const Login = () => {
-  const [account, setAccount] = useState("");
+const Login = ({ currentUser, setCurrentUser }) => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [message, setMessage] = useState("");
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -22,13 +22,18 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:4000/auth/login/", {
-      email: account,
-      password,
-    });
-    setAccount("");
-    setPassword("");
-    navigate("/");
+    try {
+      const response = await AuthService.login(email, password);
+      console.log(response);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      window.alert("登入成功！現在可以發文嚕");
+      setCurrentUser(AuthService.getCurrentUser());
+      navigate("/profile");
+      setEmail("");
+      setPassword("");
+    } catch (e) {
+      setMessage(e.response.data);
+    }
   };
 
   return (
@@ -37,6 +42,11 @@ const Login = () => {
       className="d-flex justify-content-center mt-5 align-items-center"
     >
       <Form onSubmit={(e) => submitHandler(e)}>
+        {message && (
+          <Alert variant="danger" className="mt-2">
+            {message}
+          </Alert>
+        )}
         <h2 className="d-flex justify-content-center">Log in</h2>
         <Form.Group className="mb-3 mt-4" controlId="formBasicEmail">
           <Form.Label className="fs-3">Email</Form.Label>
@@ -44,8 +54,8 @@ const Login = () => {
             required
             type="text"
             placeholder="Enter email"
-            value={account}
-            onChange={(e) => setAccount(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
 

@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { InputGroup, Alert } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-import authService from "../services/auth-service";
+import AuthService from "../services/auth-service";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -16,6 +15,9 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [message, setMessage] = useState("");
+
+  const navigete = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -37,21 +39,23 @@ const SignUp = () => {
     setPasswordsMatch(e.target.value === password);
   };
 
-  const submitHandler = async (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     if (passwordsMatch) {
       console.log("Form submitted successfully!");
     } else {
       return;
     }
-    await axios.post("http://localhost:4000/auth/signup/", {
-      name,
-      email,
-      password,
-    });
-    setEmail("");
-    setPassword("");
-    navigate("/login");
+    AuthService.signup(name, email, password)
+      .then(() => {
+        window.alert("註冊成功，來登入 8");
+        navigete("/login");
+        setEmail("");
+        setName("");
+        setConfirmPassword("");
+        setPassword("");
+      })
+      .catch((e) => setMessage(e.response.data));
   };
 
   return (
@@ -60,6 +64,11 @@ const SignUp = () => {
       className="d-flex justify-content-center my-5 align-items-center"
     >
       <Form onSubmit={(e) => submitHandler(e)}>
+        {message && (
+          <Alert variant="danger" className="mt-2">
+            {message}
+          </Alert>
+        )}
         <h2 className="d-flex justify-content-center">Sign up</h2>
         <Form.Group className="mb-3 mt-4" controlId="formBasicEmail">
           <Form.Label className="fs-3">Name</Form.Label>

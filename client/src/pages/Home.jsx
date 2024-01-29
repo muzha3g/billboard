@@ -35,8 +35,8 @@ function Home() {
               <Card.Title>{post.title}</Card.Title>
               <Card.Text className="cardText">{post.text}</Card.Text>
               <Card.Text>
-                @ <span>name</span>
-                <br />#{postData[0].date.slice(5, 10)}
+                @ <span>{post.author}</span>
+                <br />#{post.date.slice(5, 10)}
               </Card.Text>
             </Card.Link>
           </Card.Body>

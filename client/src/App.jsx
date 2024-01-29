@@ -23,7 +23,15 @@ const App = () => {
             <Post currentUser={currentUser} setCurrentUser={setCurrentUser} />
           }
         ></Route>
-        <Route path="/:id" element={<SinglePost />} />
+        <Route
+          path="/:id"
+          element={
+            <SinglePost
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+            />
+          }
+        />
         <Route path="/signup" element={<SignUp />}></Route>
         <Route
           path="/login"

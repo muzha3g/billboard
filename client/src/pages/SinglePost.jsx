@@ -2,28 +2,37 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import axios from "axios";
 import postService from "../services/post-service";
 
-function SinglePost() {
+function SinglePost({ currentUser, setCurrentUser }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [postData, setPostData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isAuthor, setIsAuthor] = useState(false);
 
   const getPostData = (id) => {
     postService.getAPost(id).then((res) => {
-      console.log(id);
-      console.log(res.data);
+      // console.log(currentUser);
+      // console.log(res.data);
+      // console.log(res.data[0].author);
+      // console.log(currentUser.user.name);
       setPostData(res.data);
+      if (currentUser === null) {
+        setIsAuthor(false);
+      } else if (res.data[0].author === currentUser.user.name) {
+        setIsAuthor(true);
+      } else {
+        setIsAuthor(false);
+      }
       setLoading(false);
     });
   };
 
-  const deletePost = async () => {
-    let response = await axios.delete(`http://localhost:4000/delete/${id}`);
-
+  const deletePost = async (id) => {
+    let response = await postService.delete(id);
     let result = await response.data;
+
     if (result) {
       navigate("/");
     }
@@ -36,7 +45,6 @@ function SinglePost() {
   useEffect(() => {
     getPostData(id);
   }, []);
-
   return (
     <main className="m-5 px-5 d-flex flex-column ">
       {!loading ? (
@@ -49,21 +57,23 @@ function SinglePost() {
               <Card.Title>{postData[0].title}</Card.Title>
               <Card.Text>{postData[0].text}</Card.Text>
               <Card.Text>
-                @ <span>name</span>
+                @ <span>{postData[0].author}</span>
                 <br />#{postData[0].date.slice(5, 10)}
               </Card.Text>
             </Card.Body>
           </Card>
           <div className="d-flex justify-content-center flex-wrap mt-4">
-            <Button
-              variant="primary"
-              type="submit"
-              className="fs-6 m-2 p-2"
-              size="sx"
-              onClick={editPost}
-            >
-              Edit post
-            </Button>
+            {isAuthor && (
+              <Button
+                variant="primary"
+                type="submit"
+                className="fs-6 m-2 p-2"
+                size="sx"
+                onClick={editPost}
+              >
+                Edit post
+              </Button>
+            )}
 
             <Button
               variant="warning"
@@ -75,16 +85,17 @@ function SinglePost() {
             >
               Back to billboard
             </Button>
-
-            <Button
-              variant="danger"
-              type="submit"
-              className="fs-6 m-2 p-2"
-              size="sx"
-              onClick={deletePost}
-            >
-              Delete Post
-            </Button>
+            {isAuthor && (
+              <Button
+                variant="danger"
+                type="submit"
+                className="fs-6 m-2 p-2"
+                size="sx"
+                onClick={() => deletePost(id)}
+              >
+                Delete Post
+              </Button>
+            )}
           </div>
         </>
       ) : (

@@ -20,8 +20,37 @@ class PostService {
     );
   }
 
-  edit() {}
-  delete() {}
+  update(title, text, author, id) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.post(
+      API_URL + "post/updated" + id,
+      { title, text, author },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+  }
+
+  delete(id) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.delete(API_URL + "post/delete/" + id, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  }
 
   getPosts() {
     return axios.get(API_URL);

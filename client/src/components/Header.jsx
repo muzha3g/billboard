@@ -3,8 +3,11 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import AuthService from "../services/auth-service";
+import { useContext } from "react";
+import { GlobalContext } from "../context/index";
 
-function Header({ currentUser, setCurrentUser }) {
+function Header() {
+  const { currentUser, setCurrentUser } = useContext(GlobalContext);
   const handleLogout = () => {
     AuthService.logout(); //清空 localStorage
     window.alert("登出成功！");

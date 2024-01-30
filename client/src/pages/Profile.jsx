@@ -1,8 +1,11 @@
 import React from "react";
 import Image from "react-bootstrap/Image";
-import { Card } from "react-bootstrap";
+import { useContext } from "react";
+import { GlobalContext } from "../context/index";
 
-const Profile = ({ currentUser, setCurrentUser }) => {
+const Profile = () => {
+  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+
   return (
     <main className="d-flex justify-content-center align-items-center flex-column mt-5">
       {currentUser ? (

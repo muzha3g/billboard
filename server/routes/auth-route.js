@@ -1,28 +1,10 @@
 const express = require("express");
 const authRouter = express.Router();
 const passport = require("passport");
-const bcrypt = require("bcrypt");
 const User = require("../model/user-model");
 const registerValidation = require("../validation").registerValidation;
 const loginValidation = require("../validation").loginValidation;
 const jwt = require("jsonwebtoken");
-
-// google auth
-authRouter.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    prompt: "select_account",
-  })
-);
-
-authRouter.get(
-  "/google/redirect",
-  passport.authenticate("google"),
-  (req, res) => {
-    return res.redirect("/");
-  }
-);
 
 // local auth
 authRouter.post("/signup", async (req, res) => {
@@ -63,7 +45,7 @@ authRouter.post("/login", async (req, res) => {
   }
 
   // 確認密碼是否正確
-  foundUser.comparePassword(password, (err, isMatch) => {
+  await foundUser.comparePassword(password, (err, isMatch) => {
     if (err) return res.status(500).send(err);
 
     if (isMatch) {

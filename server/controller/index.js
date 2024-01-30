@@ -23,13 +23,13 @@ const addAPost = async (req, res) => {
     return res.status(400).send("登入之後才可以發文ㄡ");
   }
   try {
-    const { title, text } = req.body;
+    const { title, text, author } = req.body;
     const currentDate = new Date();
     let newPost = new Post({
       title,
       text,
       date: currentDate,
-      author: req.user.name,
+      author,
     });
     await newPost.save();
     return res.status(200).send("新貼文已保存");
@@ -79,8 +79,6 @@ const deleteAPost = async (req, res) => {
     if (!findCurrentPost) {
       return res.status(400).send("Post not found");
     }
-    if (findCurrentPost.author.equals(req.user._id))
-      await Post.deleteOne({ findCurrentPost }).exec();
     return res.status(200).send("成功刪除");
   } catch (e) {
     console.log(e);

@@ -6,8 +6,9 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import postService from "../services/post-service";
 
-function Post({ currentUser, setCurrentUser }) {
-  const { formData, setFormData } = useContext(GlobalContext);
+function Post() {
+  const { formData, setFormData, currentUser, setCurrentUser } =
+    useContext(GlobalContext);
   const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();

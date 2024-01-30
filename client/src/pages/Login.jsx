@@ -5,12 +5,15 @@ import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import AuthService from "../services/auth-service";
+import { useContext } from "react";
+import { GlobalContext } from "../context/index";
 
-const Login = ({ currentUser, setCurrentUser }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
+  const { currentUser, setCurrentUser } = useContext(GlobalContext);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };

@@ -1,7 +1,5 @@
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-import { FaRegHeart } from "react-icons/fa6";
-import { FcLike } from "react-icons/fc";
 import { GlobalContext } from "../context";
 import { useContext, useEffect, useState } from "react";
 import PostService from "../services/post-service";

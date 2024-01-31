@@ -23,13 +23,13 @@ const addAPost = async (req, res) => {
     return res.status(400).send("登入之後才可以發文ㄡ");
   }
   try {
-    const { title, text, author } = req.body;
+    const { title, text, authorID } = req.body;
     const currentDate = new Date();
     let newPost = new Post({
       title,
       text,
       date: currentDate,
-      author,
+      authorID,
     });
     await newPost.save();
     return res.status(200).send("新貼文已保存");
@@ -46,7 +46,7 @@ const updateAPost = async (req, res) => {
 
   try {
     const id = req.params.id;
-    const { title, text } = req.body;
+    const { title, text, authorID } = req.body;
 
     let foundPost = await Post.findOne({ _id: id }).exec();
 
@@ -55,7 +55,7 @@ const updateAPost = async (req, res) => {
     }
 
     // 發佈人才能編輯 post
-    if (foundPost.author.equals(req.user._id)) {
+    if (foundPost.authorID.equals(req.user._id)) {
       let updatedPost = await Post.findOneAndUpdate(
         { _id: id },
         { title, text },

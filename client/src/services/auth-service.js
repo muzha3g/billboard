@@ -9,9 +9,11 @@ class AuthService {
       password,
     });
   }
+
   logout() {
     localStorage.removeItem("user");
   }
+
   signup(name, email, password) {
     return axios.post(AUTH_URL + "signup", {
       name,
@@ -19,6 +21,7 @@ class AuthService {
       password,
     });
   }
+
   getCurrentUser() {
     try {
       return JSON.parse(localStorage.getItem("user"));

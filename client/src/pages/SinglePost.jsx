@@ -12,6 +12,7 @@ function SinglePost() {
   const [postData, setPostData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAuthor, setIsAuthor] = useState(false);
+
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
   const getPostData = (id) => {
     postService.getAPost(id).then((res) => {

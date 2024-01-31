@@ -14,6 +14,13 @@ function Post() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  let token;
+  if (localStorage.getItem("user")) {
+    token = JSON.parse(localStorage.getItem("user")).token;
+  } else {
+    token = "";
+  }
+
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -26,13 +33,14 @@ function Post() {
             {
               title: formData.title,
               text: formData.text,
+            },
+            {
+              headers: {
+                Authorization: token,
+              },
             }
           )
         : await postService.add(formData.title, formData.text, author);
-      // await axios.post("http://localhost:4000/post/add", {
-      //     title: formData.title,
-      //     text: formData.text,
-      //   });
 
       const result = response.data;
       console.log(result);

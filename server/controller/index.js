@@ -3,7 +3,7 @@ const postValidation = require("../validation").postValidation;
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find({}).populate("author", ["name"]).exec(); //populate 會讓 author 的值變成括號裡指定的 key-value 物件，這樣就能抓到是誰寫這個 Post 了
+    const posts = await Post.find({}).populate("authorID", ["name"]).exec(); //populate 會讓 author 的值變成括號裡指定的 key-value 物件，這樣就能抓到是誰寫這個 Post 了
     if (!posts || posts.length === 0) {
       return res.status(404).json({ message: "No posts found" });
     }
@@ -89,7 +89,9 @@ const deleteAPost = async (req, res) => {
 const getAPost = async (req, res) => {
   try {
     const id = req.params.id;
-    const findPost = await Post.find({ _id: id }).exec();
+    const findPost = await Post.find({ _id: id })
+      .populate("authorID", ["name"])
+      .exec();
     return res.status(200).send(findPost);
   } catch (e) {
     console.log(e);
@@ -97,4 +99,24 @@ const getAPost = async (req, res) => {
   }
 };
 
-module.exports = { getAllPosts, updateAPost, addAPost, deleteAPost, getAPost };
+const getProfilePost = async (req, res) => {
+  try {
+    const id = req.user.user._id;
+    const findPost = await Post.find({ _id: id })
+      .populate("authorID", ["name"])
+      .exec();
+    return res.status(200).send(findPost);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send("Post not found");
+  }
+};
+
+module.exports = {
+  getAllPosts,
+  updateAPost,
+  addAPost,
+  deleteAPost,
+  getAPost,
+  getProfilePost,
+};

@@ -7,13 +7,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import postService from "../services/post-service";
 
 function Post() {
-  const { formData, setFormData, currentUser, setCurrentUser } =
-    useContext(GlobalContext);
+  const { formData, setFormData, currentUser } = useContext(GlobalContext);
   const [isEdit, setIsEdit] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
+  // 需處理，功能想都放在 service folder
   let token;
   if (localStorage.getItem("user")) {
     token = JSON.parse(localStorage.getItem("user")).token;
@@ -23,8 +22,8 @@ function Post() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    let author = currentUser.user.name;
+
+    let authorID = currentUser.user._id;
 
     try {
       const response = isEdit
@@ -40,13 +39,12 @@ function Post() {
               },
             }
           )
-        : await postService.add(formData.title, formData.text, author);
+        : await postService.add(formData.title, formData.text, authorID);
 
       const result = response.data;
       console.log(result);
 
       if (result) {
-        setIsEdit(false);
         setFormData({
           title: "",
           text: "",
@@ -57,13 +55,12 @@ function Post() {
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     if (location.state) {
-      console.log(location.state);
+      // console.log(location.state);
       const { postData } = location.state;
       setIsEdit(true);
       setFormData({

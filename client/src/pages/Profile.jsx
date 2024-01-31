@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "react-bootstrap/Image";
 import { useContext } from "react";
 import { GlobalContext } from "../context/index";
+import postService from "../services/post-service";
 
 const Profile = () => {
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
+  const [profilePosts, setProfilePosts] = useState(null);
 
+  let id = currentUser.user._id;
+  useEffect(() => {
+    setProfilePosts(postService.getProfilePost(id));
+  }, []);
   return (
     <main className="d-flex justify-content-center align-items-center flex-column mt-5">
       {currentUser ? (
@@ -27,7 +33,30 @@ const Profile = () => {
             style={{
               width: "100%",
             }}
-          ></div>
+          >
+            {profilePosts.map((post) => (
+              <Card
+                key={post._id}
+                style={{ boxShadow: "12px 12px 2px 1px rgba(0, 0, 255, 0.2)" }}
+                className="mb-3"
+              >
+                <Card.Body>
+                  <Card.Link
+                    as={Link}
+                    to={`/${post._id}`}
+                    className="text-decoration-none font-dark"
+                  >
+                    <Card.Title>{post.title}</Card.Title>
+                    <Card.Text className="cardText">{post.text}</Card.Text>
+                    <Card.Text>
+                      @ <span>{post.authorID}</span>
+                      <br />#{post.date.slice(5, 10)}
+                    </Card.Text>
+                  </Card.Link>
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
         </>
       ) : (
         <div>

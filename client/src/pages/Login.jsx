@@ -14,6 +14,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };

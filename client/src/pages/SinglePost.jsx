@@ -10,10 +10,10 @@ function SinglePost() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [postData, setPostData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isAuthor, setIsAuthor] = useState(false);
 
-  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+  const { currentUser, setCurrentUser, loading, setLoading } =
+    useContext(GlobalContext);
   const getPostData = (id) => {
     postService.getAPost(id).then((res) => {
       // console.log(currentUser);
@@ -60,7 +60,7 @@ function SinglePost() {
               <Card.Title>{postData[0].title}</Card.Title>
               <Card.Text>{postData[0].text}</Card.Text>
               <Card.Text>
-                @ <span>{postData[0].author}</span>
+                @ <span>{postData[0].authorID}</span>
                 <br />#{postData[0].date.slice(5, 10)}
               </Card.Text>
             </Card.Body>

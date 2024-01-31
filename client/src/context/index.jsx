@@ -7,10 +7,11 @@ export default function GlobalState({ children }) {
   const [formData, setFormData] = useState({
     title: "",
     text: "",
+    authorID: "",
   });
 
   const [postList, setPostList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
 
   return (

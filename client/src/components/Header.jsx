@@ -8,6 +8,7 @@ import { GlobalContext } from "../context/index";
 
 function Header() {
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
+
   const handleLogout = () => {
     AuthService.logout(); //清空 localStorage
     window.alert("登出成功！");

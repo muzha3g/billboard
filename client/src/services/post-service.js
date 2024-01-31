@@ -2,7 +2,7 @@ import axios from "axios";
 const API_URL = "http://localhost:4000/";
 
 class PostService {
-  add(title, text, author) {
+  add(title, text, authorID) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -11,7 +11,7 @@ class PostService {
     }
     return axios.post(
       API_URL + "post/add",
-      { title, text, author },
+      { title, text, authorID },
       {
         headers: {
           Authorization: token,
@@ -58,6 +58,10 @@ class PostService {
 
   getAPost(id) {
     return axios.get(API_URL + id);
+  }
+
+  getProfilePost(id) {
+    return axios.get(API_URL + "/post/profile" + id);
   }
 }
 

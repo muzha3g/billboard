@@ -11,7 +11,7 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
   }
 
   signup(name, email, password) {
@@ -24,7 +24,7 @@ class AuthService {
 
   getCurrentUser() {
     try {
-      return JSON.parse(localStorage.getItem("user"));
+      return JSON.parse(sessionStorage.getItem("user"));
     } catch (error) {
       console.error("Error parsing user data:", error);
       return null;

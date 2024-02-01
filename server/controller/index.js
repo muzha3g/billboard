@@ -16,18 +16,20 @@ const getAllPosts = async (req, res) => {
 
 const addAPost = async (req, res) => {
   // 確認數據是否符合規範
-  let { error } = postValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  // let { error } = postValidation(req.body);
+  // if (error) return res.status(400).send(error.details[0].message);
 
   if (!req.user) {
     return res.status(400).send("登入之後才可以發文ㄡ");
   }
 
   try {
-    const { title, text } = req.body;
+    const { title, text, currentUser } = req.body;
     const currentDate = new Date();
     // 改把 authorID 宣告在這裡，但還是錯，直接回應一個 500
-    const authorID = req.user.user._id;
+    console.log("addAPost", req.user);
+    // 要解查 authorID 是什麼
+    const authorID = currentUser;
     let newPost = new Post({
       title,
       text,

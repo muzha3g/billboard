@@ -2,15 +2,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { GlobalContext } from "../context/index";
 import { useContext, useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import postService from "../services/post-service";
+import PostService from "../services/post-service";
 
+const postService = new PostService();
 function Post() {
   const initFormData = {
     title: "",
     text: "",
-    authorID: "",
   };
   const { currentUser } = useContext(GlobalContext);
   const [isEdit, setIsEdit] = useState(false);
@@ -19,34 +18,26 @@ function Post() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  let token;
-  if (localStorage.getItem("user")) {
-    token = JSON.parse(localStorage.getItem("user")).token;
-  } else {
-    token = "";
-  }
-
   const submitHandler = async (e) => {
     e.preventDefault();
 
     // 原本 authorID 是寫在這裡，然後傳到下面的 post axios 的參數，但會顯示 authorIDis not allowed，所以把  authorID 移到 server 的 contoller 去取 req.user.user._id的值
-    let authorID = currentUser.user._id;
 
+    // 如果要把 put 移到 service folder 的做法
     try {
       const response = isEdit
-        ? await axios.put(
-            `http://localhost:4000/post/updated/${location.state.postData[0]._id}`,
-            {
+        ? await postService.update({
+            payload: {
               title: formData.title,
               text: formData.text,
             },
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          )
-        : await postService.add(formData.title, formData.text);
+            url: `post/updated/${location.state.postData[0]._id}`,
+          })
+        : await postService.add({
+            title: formData.title,
+            text: formData.text,
+            currentUser: currentUser?.user._id,
+          });
       // 把 authorID 刪掉就好了，但抓資料就會顯示不了 authorID.name
 
       const result = response.data;

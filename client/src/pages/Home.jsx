@@ -4,12 +4,13 @@ import { GlobalContext } from "../context";
 import { useContext, useEffect } from "react";
 import PostService from "../services/post-service";
 
+const postService = new PostService();
 function Home() {
   const { postList, setPostList, loading, setLoading } =
     useContext(GlobalContext);
 
   const getAllPosts = () => {
-    PostService.getPosts().then((result) => {
+    postService.getPosts().then((result) => {
       setPostList(result.data);
     });
   };

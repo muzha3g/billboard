@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { InputGroup, Alert } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -7,13 +7,14 @@ import { Eye, EyeSlash } from "react-bootstrap-icons";
 import AuthService from "../services/auth-service";
 import { useContext } from "react";
 import { GlobalContext } from "../context/index";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
-  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+  const { setCurrentUser } = useContext(GlobalContext);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -29,8 +30,12 @@ const Login = () => {
     try {
       const response = await AuthService.login(email, password);
       console.log(response);
-      localStorage.setItem("user", JSON.stringify(response.data));
-      window.alert("登入成功！現在可以發文嚕");
+      sessionStorage.setItem("user", JSON.stringify(response.data));
+      Swal.fire({
+        title: "Good job!",
+        text: "成功登入囉",
+        icon: "success",
+      });
       setCurrentUser(AuthService.getCurrentUser());
       navigate("/profile");
       setEmail("");

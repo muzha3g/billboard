@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import postService from "../services/post-service";
+import PostService from "../services/post-service";
 import { useContext } from "react";
 import { GlobalContext } from "../context/index";
 
+const postService = new PostService();
 function SinglePost() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [postData, setPostData] = useState([]);
   const [isAuthor, setIsAuthor] = useState(false);
 
-  const { currentUser, setCurrentUser, loading, setLoading } =
-    useContext(GlobalContext);
+  const { currentUser, loading, setLoading } = useContext(GlobalContext);
   const getPostData = (id) => {
     postService.getAPost(id).then((res) => {
       // console.log(currentUser);

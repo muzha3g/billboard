@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "react-bootstrap/Image";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { GlobalContext } from "../context/index";
-import postService from "../services/post-service";
+import PostService from "../services/post-service";
 import Card from "react-bootstrap/Card";
 
+const postService = new PostService();
 const Profile = () => {
+  const navigate = useNavigate();
   const { currentUser, loading, setLoading } = useContext(GlobalContext);
   const [profilePosts, setProfilePosts] = useState([]);
 
-  let id = currentUser.user._id;
+  let userID = currentUser?.user?._id;
 
-  const getPosts = () => {
+  const getPosts = (id) => {
     postService.getProfilePost(id).then((posts) => {
       setProfilePosts(posts.data);
       console.log(posts);
@@ -20,10 +22,14 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    if (!currentUser) navigate("/");
+  }, [currentUser]);
+
+  useEffect(() => {
     setLoading(true);
-    getPosts(id);
+    getPosts(userID);
     setLoading(false);
-  }, []);
+  }, [setLoading, userID]);
 
   return (
     <main className="d-flex justify-content-center align-items-center flex-column mt-5">

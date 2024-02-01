@@ -9,7 +9,7 @@ module.exports = (passport) => {
 
   passport.use(
     new JwtStrategy(opts, async function (jwt_payload, done) {
-      console.log(jwt_payload); //有之前存入的 jwt token 資料(？)，id 跟 email
+      // console.log(jwt_payload)-->有之前在 auth-route 裡存入的 tokenObject 資料(？)，id 跟 email
       /*
       {
   id: '65b652a716b80fbc6a20b63c',

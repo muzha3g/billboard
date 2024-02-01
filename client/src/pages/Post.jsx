@@ -46,6 +46,7 @@ function Post() {
             }
           )
         : await postService.add(formData.title, formData.text, authorID);
+      // 把 authorID 刪掉就好了，但抓資料就會顯示不了 authorID.name
 
       const result = response.data;
       console.log(result);

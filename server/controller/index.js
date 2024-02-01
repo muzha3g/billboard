@@ -22,7 +22,7 @@ const addAPost = async (req, res) => {
   if (!req.user) {
     return res.status(400).send("登入之後才可以發文ㄡ");
   }
-  console.log("addAPost");
+
   try {
     const { title, text, authorID } = req.body;
     const currentDate = new Date();

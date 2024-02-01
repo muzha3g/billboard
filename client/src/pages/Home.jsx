@@ -10,12 +10,12 @@ function Home() {
 
   const getAllPosts = () => {
     PostService.getPosts().then((result) => {
-      // console.log(result.data);
       setPostList(result.data);
     });
   };
 
   useEffect(() => {
+    setLoading(true);
     getAllPosts();
     setLoading(false);
   }, []);

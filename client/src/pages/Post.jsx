@@ -7,13 +7,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 import postService from "../services/post-service";
 
 function Post() {
-  const { formData, setFormData, currentUser, isLoading, setIsLoading } =
-    useContext(GlobalContext);
+  const initFormData = {
+    title: "",
+    text: "",
+    authorID: "",
+  };
+  const { currentUser } = useContext(GlobalContext);
   const [isEdit, setIsEdit] = useState(false);
+  const [formData, setFormData] = useState(initFormData);
+
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 需處理，功能想都放在 service folder
   let token;
   if (localStorage.getItem("user")) {
     token = JSON.parse(localStorage.getItem("user")).token;
@@ -55,7 +60,6 @@ function Post() {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-    } finally {
     }
   };
 
@@ -113,7 +117,6 @@ function Post() {
                 type="submit"
                 className="fs-5 mt-2"
                 size="sm"
-                disabled={isLoading}
               >
                 {isEdit ? "Edit" : "New post"}
               </Button>

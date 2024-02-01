@@ -16,7 +16,6 @@ const getAllPosts = async (req, res) => {
 
 const addAPost = async (req, res) => {
   // 確認數據是否符合規範
-
   let { error } = postValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -105,7 +104,7 @@ const getProfilePost = async (req, res) => {
   try {
     console.log(req.user, "11111111111111111");
     const id = req.user._id;
-    const findPost = await Post.find({ _id: id })
+    const findPost = await Post.find({ authorID: id })
       .populate("authorID", ["name"])
       .exec();
     return res.status(200).send(findPost);

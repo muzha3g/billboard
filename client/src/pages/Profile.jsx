@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from "react";
 import Image from "react-bootstrap/Image";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { GlobalContext } from "../context/index";
 import postService from "../services/post-service";
+import Card from "react-bootstrap/Card";
 
 const Profile = () => {
-  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+  const { currentUser, loading, setLoading } = useContext(GlobalContext);
   const [profilePosts, setProfilePosts] = useState([]);
 
-  const getPosts = async () => {
-    const posts = await postService.getProfilePost(id);
-    setProfilePosts(posts);
-    return posts;
-  };
-  let token;
-  if (localStorage.getItem("user")) {
-    token = JSON.parse(localStorage.getItem("user")).token;
-  } else {
-    token = "";
-  }
   let id = currentUser.user._id;
+
+  const getPosts = () => {
+    postService.getProfilePost(id).then((posts) => {
+      setProfilePosts(posts.data);
+      console.log(posts);
+    });
+  };
+
   useEffect(() => {
-    const res = getPosts();
-    console.log(res);
+    setLoading(true);
+    getPosts(id);
+    setLoading(false);
   }, []);
+
   return (
     <main className="d-flex justify-content-center align-items-center flex-column mt-5">
       {currentUser ? (
@@ -46,28 +47,35 @@ const Profile = () => {
               width: "100%",
             }}
           >
-            {profilePosts.map((post) => (
-              <Card
-                key={post._id}
-                style={{ boxShadow: "12px 12px 2px 1px rgba(0, 0, 255, 0.2)" }}
-                className="mb-3"
-              >
-                <Card.Body>
-                  <Card.Link
-                    as={Link}
-                    to={`/${post._id}`}
-                    className="text-decoration-none font-dark"
-                  >
-                    <Card.Title>{post.title}</Card.Title>
-                    <Card.Text className="cardText">{post.text}</Card.Text>
-                    <Card.Text>
-                      @ <span>{post.authorID.name}</span>
-                      <br />#{post.date.slice(5, 10)}
-                    </Card.Text>
-                  </Card.Link>
-                </Card.Body>
-              </Card>
-            ))}
+            {!loading ? (
+              profilePosts.map((post) => (
+                <Card
+                  key={post._id}
+                  style={{
+                    boxShadow: "12px 12px 2px 1px rgba(0, 0, 255, 0.2)",
+                    width: "60%",
+                  }}
+                  className="mb-3"
+                >
+                  <Card.Body>
+                    <Card.Link
+                      as={Link}
+                      to={`/${post._id}`}
+                      className="text-decoration-none font-dark"
+                    >
+                      <Card.Title>{post.title}</Card.Title>
+                      <Card.Text className="cardText">{post.text}</Card.Text>
+                      <Card.Text>
+                        @ <span>{post.authorID.name}</span>
+                        <br />#{post.date.slice(5, 10)}
+                      </Card.Text>
+                    </Card.Link>
+                  </Card.Body>
+                </Card>
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </>
       ) : (

@@ -61,6 +61,12 @@ class PostService {
   }
 
   getProfilePost(id) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
     return axios.get(API_URL + "post/profile/" + id, {
       headers: {
         Authorization: token,

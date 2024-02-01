@@ -20,6 +20,8 @@ function Home() {
     setLoading(false);
   }, []);
 
+  console.log("postList", postList);
+
   return (
     <main className="m-5 px-5 d-flex flex-column ">
       {!loading ? (
@@ -38,7 +40,7 @@ function Home() {
                 <Card.Title>{post.title}</Card.Title>
                 <Card.Text className="cardText">{post.text}</Card.Text>
                 <Card.Text>
-                  @ <span>{post.authorID}</span>
+                  @ <span>{post?.authorID?.name}</span>
                   <br />#{post.date.slice(5, 10)}
                 </Card.Text>
               </Card.Link>

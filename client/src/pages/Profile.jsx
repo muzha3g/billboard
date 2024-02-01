@@ -6,11 +6,23 @@ import postService from "../services/post-service";
 
 const Profile = () => {
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
-  const [profilePosts, setProfilePosts] = useState(null);
+  const [profilePosts, setProfilePosts] = useState([]);
 
+  const getPosts = async () => {
+    const posts = await postService.getProfilePost(id);
+    setProfilePosts(posts);
+    return posts;
+  };
+  let token;
+  if (localStorage.getItem("user")) {
+    token = JSON.parse(localStorage.getItem("user")).token;
+  } else {
+    token = "";
+  }
   let id = currentUser.user._id;
   useEffect(() => {
-    setProfilePosts(postService.getProfilePost(id));
+    const res = getPosts();
+    console.log(res);
   }, []);
   return (
     <main className="d-flex justify-content-center align-items-center flex-column mt-5">
@@ -49,7 +61,7 @@ const Profile = () => {
                     <Card.Title>{post.title}</Card.Title>
                     <Card.Text className="cardText">{post.text}</Card.Text>
                     <Card.Text>
-                      @ <span>{post.authorID}</span>
+                      @ <span>{post.authorID.name}</span>
                       <br />#{post.date.slice(5, 10)}
                     </Card.Text>
                   </Card.Link>

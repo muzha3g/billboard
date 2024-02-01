@@ -18,12 +18,12 @@ function SinglePost() {
     postService.getAPost(id).then((res) => {
       // console.log(currentUser);
       // console.log(res.data);
-      // console.log(res.data[0].author);
+      console.log(res.data[0]);
       // console.log(currentUser.user.name);
       setPostData(res.data);
       if (currentUser === null) {
         setIsAuthor(false);
-      } else if (res.data[0].author === currentUser.user.name) {
+      } else if (res.data[0].authorID._id === currentUser.user._id) {
         setIsAuthor(true);
       } else {
         setIsAuthor(false);
@@ -50,17 +50,17 @@ function SinglePost() {
   }, []);
   return (
     <main className="m-5 px-5 d-flex flex-column ">
-      {!loading ? (
+      {!loading && postData[0] ? (
         <>
           <Card
             style={{ boxShadow: "12px 12px 2px 1px rgba(0, 0, 255, 0.2)" }}
             className="mb-3"
           >
             <Card.Body>
-              <Card.Title>{postData[0].title}</Card.Title>
+              <Card.Title>{postData[0]?.title}</Card.Title>
               <Card.Text>{postData[0].text}</Card.Text>
               <Card.Text>
-                @ <span>{postData[0].authorID}</span>
+                @ <span>{postData[0]?.authorID.name}</span>
                 <br />#{postData[0].date.slice(5, 10)}
               </Card.Text>
             </Card.Body>

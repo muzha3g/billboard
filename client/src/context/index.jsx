@@ -2,13 +2,14 @@ import { useState, createContext } from "react";
 import AuthService from "../services/auth-service";
 
 export const GlobalContext = createContext(null);
+export const initFormData = {
+  title: "",
+  text: "",
+  authorID: "",
+};
 
 export default function GlobalState({ children }) {
-  const [formData, setFormData] = useState({
-    title: "",
-    text: "",
-    authorID: "",
-  });
+  const [formData, setFormData] = useState(initFormData);
 
   const [postList, setPostList] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -61,7 +61,11 @@ class PostService {
   }
 
   getProfilePost(id) {
-    return axios.get(API_URL + "/post/profile" + id);
+    return axios.get(API_URL + "post/profile/" + id, {
+      headers: {
+        Authorization: token,
+      },
+    });
   }
 }
 

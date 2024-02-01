@@ -16,12 +16,14 @@ const getAllPosts = async (req, res) => {
 
 const addAPost = async (req, res) => {
   // 確認數據是否符合規範
+
   let { error } = postValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   if (!req.user) {
     return res.status(400).send("登入之後才可以發文ㄡ");
   }
+  console.log("addAPost");
   try {
     const { title, text, authorID } = req.body;
     const currentDate = new Date();
@@ -75,7 +77,7 @@ const updateAPost = async (req, res) => {
 const deleteAPost = async (req, res) => {
   const id = req.params.id;
   try {
-    const findCurrentPost = await Post.findOne({ _id: id });
+    const findCurrentPost = await Post.findOneAndDelete({ _id: id });
     if (!findCurrentPost) {
       return res.status(400).send("Post not found");
     }
@@ -101,7 +103,8 @@ const getAPost = async (req, res) => {
 
 const getProfilePost = async (req, res) => {
   try {
-    const id = req.user.user._id;
+    console.log(req.user, "11111111111111111");
+    const id = req.user._id;
     const findPost = await Post.find({ _id: id })
       .populate("authorID", ["name"])
       .exec();

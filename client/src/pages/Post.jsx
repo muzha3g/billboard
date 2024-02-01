@@ -29,6 +29,7 @@ function Post() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    // 原本 authorID 是寫在這裡，然後傳到下面的 post axios 的參數，但會顯示 authorIDis not allowed，所以把  authorID 移到 server 的 contoller 去取 req.user.user._id的值
     let authorID = currentUser.user._id;
 
     try {
@@ -45,7 +46,7 @@ function Post() {
               },
             }
           )
-        : await postService.add(formData.title, formData.text, authorID);
+        : await postService.add(formData.title, formData.text);
       // 把 authorID 刪掉就好了，但抓資料就會顯示不了 authorID.name
 
       const result = response.data;
@@ -88,12 +89,15 @@ function Post() {
               <Form.Control
                 required
                 type="text"
+                minLength={5}
+                maxLength={50}
                 placeholder="Enter title"
                 value={formData.title}
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
                 }
               />
+              <Form.Text className="text-muted fs-6">Word limit:5-50</Form.Text>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -101,6 +105,8 @@ function Post() {
               <Form.Control
                 required
                 as="textarea"
+                minLength={10}
+                maxLength={500}
                 rows={5}
                 placeholder="Enter content"
                 value={formData.text}
@@ -109,7 +115,7 @@ function Post() {
                 }
               />
               <Form.Text className="text-muted fs-6">
-                You can share whatever you what to say.
+                Word limit:10-500
               </Form.Text>
             </Form.Group>
             <div className="d-flex justify-content-center">

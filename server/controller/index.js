@@ -24,8 +24,10 @@ const addAPost = async (req, res) => {
   }
 
   try {
-    const { title, text, authorID } = req.body;
+    const { title, text } = req.body;
     const currentDate = new Date();
+    // 改把 authorID 宣告在這裡，但還是錯，直接回應一個 500
+    const authorID = req.user.user._id;
     let newPost = new Post({
       title,
       text,
@@ -36,7 +38,8 @@ const addAPost = async (req, res) => {
     return res.status(200).send("新貼文已保存");
   } catch (e) {
     console.log(e);
-    return res.status(500).send("無法創建課程");
+    console.log(req.user);
+    return res.status(500).send("無法創建貼文");
   }
 };
 
@@ -47,7 +50,7 @@ const updateAPost = async (req, res) => {
 
   try {
     const id = req.params.id;
-    const { title, text, authorID } = req.body;
+    const { title, text } = req.body;
 
     let foundPost = await Post.findOne({ _id: id }).exec();
 

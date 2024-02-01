@@ -2,7 +2,7 @@ import axios from "axios";
 const API_URL = "http://localhost:4000/";
 
 class PostService {
-  add(title, text, authorID) {
+  add(title, text) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -11,7 +11,7 @@ class PostService {
     }
     return axios.post(
       API_URL + "post/add",
-      { title, text, authorID },
+      { title, text },
       {
         headers: {
           Authorization: token,
@@ -20,7 +20,7 @@ class PostService {
     );
   }
 
-  update(title, text, author, id) {
+  update(title, text, id) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -29,7 +29,7 @@ class PostService {
     }
     return axios.post(
       API_URL + "post/updated" + id,
-      { title, text, author },
+      { title, text },
       {
         headers: {
           Authorization: token,

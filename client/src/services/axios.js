@@ -1,7 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const API_URL = "http://localhost:4000/";
+const API_URL = "https://billboard-sever.onrender.com/";
 
 const instance = axios.create({
   baseURL: API_URL,

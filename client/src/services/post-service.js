@@ -1,6 +1,6 @@
 import axios from "axios";
 import blogApi from "./axios";
-const API_URL = "http://localhost:4000/";
+const API_URL = "https://billboard-sever.onrender.com/";
 
 class PostService {
   add(payload) {

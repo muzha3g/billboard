@@ -1,6 +1,6 @@
 // 跟登入登出有關的，都來找這個檔案
 import axios from "axios";
-const AUTH_URL = "http://localhost:4000/auth/";
+const AUTH_URL = "https://billboard-sever.onrender.com/" + "auth/";
 
 class AuthService {
   login(email, password) {

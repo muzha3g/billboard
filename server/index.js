@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // render 後端佈署
 const corsOptions = {
-  origin: process.env.FRONTEND || "http://localhost:4000", // 設定允許的來源
+  origin: "https://billboard-sever.onrender.com/", // 設定允許的來源
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // 設定允許的 HTTP 方法
   optionsSuccessStatus: 204,
 };

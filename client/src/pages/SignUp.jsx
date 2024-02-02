@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { InputGroup, Alert } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import AuthService from "../services/auth-service";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -48,12 +49,12 @@ const SignUp = () => {
     }
     AuthService.signup(name, email, password)
       .then(() => {
-        window.alert("註冊成功，來登入 8");
+        Swal.fire({
+          title: "Good job!",
+          text: "註冊成功，可以登入了！",
+          icon: "success",
+        });
         navigete("/login");
-        setEmail("");
-        setName("");
-        setConfirmPassword("");
-        setPassword("");
       })
       .catch((e) => setMessage(e.response.data));
   };

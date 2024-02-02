@@ -4,6 +4,7 @@ import { GlobalContext } from "../context/index";
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import PostService from "../services/post-service";
+import Swal from "sweetalert2";
 
 const postService = new PostService();
 function Post() {
@@ -48,7 +49,11 @@ function Post() {
           title: "",
           text: "",
         });
-        window.alert("成功發佈貼文！");
+        Swal.fire({
+          title: "Good job!",
+          text: "發文成功",
+          icon: "success",
+        });
         navigate("/");
       }
     } catch (error) {

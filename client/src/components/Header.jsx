@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 import AuthService from "../services/auth-service";
 import { useContext } from "react";
 import { GlobalContext } from "../context/index";
+import Swal from "sweetalert2";
 
 function Header() {
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
 
   const handleLogout = () => {
     AuthService.logout(); //清空 localStorage
-    window.alert("登出成功！");
+    Swal.fire({
+      title: "Good job!",
+      text: "登出成功",
+      icon: "success",
+    });
     setCurrentUser(null);
   };
   return (

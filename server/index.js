@@ -16,16 +16,16 @@ mongoose
   .then(console.log("connect to mongoDB..."))
   .catch((e) => console.log(e));
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // render 後端佈署
 const corsOptions = {
   origin: "https://billboard-sever.onrender.com/", // 設定允許的來源
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // 設定允許的 HTTP 方法
   optionsSuccessStatus: 204,
 };
+
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/auth", authRouter);
 

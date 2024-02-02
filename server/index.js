@@ -18,7 +18,7 @@ mongoose
 
 // render 後端佈署
 const corsOptions = {
-  origin: "https://billboard-sever.onrender.com/", // 設定允許的來源
+  origin: "https://billboard-sable.vercel.app/", // 設定允許的來源
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // 設定允許的 HTTP 方法
   optionsSuccessStatus: 204,
 };

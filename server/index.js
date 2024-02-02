@@ -18,11 +18,14 @@ mongoose
 
 // render 後端佈署
 const corsOptions = {
-  origin: "http://localhost:5173/" || "https://billboard-sable.vercel.app/", // 設定允許的來源
+  origin: "*", // 設定允許的來源
+  methods: ["GET", "POST", "PUT", "DELETE"],
   optionsSuccessStatus: 204,
+  allowedHeaders: ["Content-Type"],
 };
 
 app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

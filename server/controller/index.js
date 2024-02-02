@@ -3,6 +3,7 @@ const postValidation = require("../validation").postValidation;
 
 const getAllPosts = async (req, res) => {
   try {
+    res.set("Access-Control-Allow-Origin", "*");
     const posts = await Post.find({}).populate("authorID", ["name"]).exec(); //populate 會讓 author 的值變成括號裡指定的 key-value 物件，這樣就能抓到是誰寫這個 Post 了
     if (!posts || posts.length === 0) {
       return res.status(404).json({ message: "No posts found" });

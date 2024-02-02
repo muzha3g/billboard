@@ -21,8 +21,6 @@ function Home() {
     setLoading(false);
   }, []);
 
-  console.log("postList", postList);
-
   return (
     <main className="m-5 px-5 d-flex flex-column ">
       {!loading ? (

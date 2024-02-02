@@ -18,8 +18,7 @@ mongoose
 
 // render 後端佈署
 const corsOptions = {
-  origin: "https://billboard-sable.vercel.app/", // 設定允許的來源
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // 設定允許的 HTTP 方法
+  origin: "http://localhost:5173/" || "https://billboard-sable.vercel.app/", // 設定允許的來源
   optionsSuccessStatus: 204,
 };
 

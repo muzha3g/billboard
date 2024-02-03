@@ -19,10 +19,9 @@ mongoose
 // render 後端佈署
 const corsOptions = {
   origin: "*", // 設定允許的來源
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 204,
   credentials: true,
-  allowedHeaders: ["Content-Type"],
 };
 
 app.use(cors(corsOptions));

@@ -12,7 +12,8 @@ const Profile = () => {
   const { currentUser, loading, setLoading } = useContext(GlobalContext);
   const [profilePosts, setProfilePosts] = useState([]);
 
-  let userID = currentUser?.user?._id;
+  console.log(currentUser);
+  let userID = currentUser.user._id;
 
   const getPosts = (id) => {
     postService.getProfilePost(id).then((posts) => {
@@ -23,13 +24,13 @@ const Profile = () => {
 
   useEffect(() => {
     if (!currentUser) navigate("/");
-  }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
     getPosts(userID);
     setLoading(false);
-  }, [setLoading, userID]);
+  }, []);
 
   return (
     <main className="d-flex justify-content-center align-items-center flex-column mt-5">

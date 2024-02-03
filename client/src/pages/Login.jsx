@@ -38,8 +38,6 @@ const Login = () => {
       });
       setCurrentUser(AuthService.getCurrentUser());
       navigate("/profile");
-      setEmail("");
-      setPassword("");
     } catch (e) {
       setMessage(e.response.data);
     }

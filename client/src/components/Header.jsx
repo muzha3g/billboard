@@ -11,7 +11,7 @@ function Header() {
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
 
   const handleLogout = () => {
-    AuthService.logout(); //清空 localStorage
+    AuthService.logout(); //清空 sessionStorage
     Swal.fire({
       title: "Good job!",
       text: "登出成功",

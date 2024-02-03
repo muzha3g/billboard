@@ -5,7 +5,7 @@ const API_URL = "https://billboard-sever.onrender.com/";
 
 const instance = axios.create({
   baseURL: API_URL,
-  timeout: 3000,
+  timeout: 5000,
 });
 
 instance.interceptors.request.use(function (config) {
@@ -16,26 +16,26 @@ instance.interceptors.request.use(function (config) {
   return config;
 });
 
-instance.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
+// instance.interceptors.response.use(
+//   function (response) {
+//     // Any status code that lie within the range of 2xx cause this function to trigger
+//     // Do something with response data
 
-    return response;
-  },
-  function (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!",
-      footer: `<a href="#">${error.message}</a>`,
-    });
-    console.log(error);
-    sessionStorage.clear();
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error);
-  }
-);
+//     return response;
+//   },
+//   function (error) {
+//     Swal.fire({
+//       icon: "error",
+//       title: "Oops...",
+//       text: "Something went wrong!",
+//       footer: `<a href="#">${error.message}</a>`,
+//     });
+//     console.log(error);
+//     sessionStorage.clear();
+//     // Any status codes that falls outside the range of 2xx cause this function to trigger
+//     // Do something with response error
+//     return Promise.reject(error);
+//   }
+// );
 
 export default instance;

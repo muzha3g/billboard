@@ -21,6 +21,7 @@ const corsOptions = {
   origin: "*", // 設定允許的來源
   methods: ["GET", "POST", "PUT", "DELETE"],
   optionsSuccessStatus: 204,
+  credentials: true,
   allowedHeaders: ["Content-Type"],
 };
 

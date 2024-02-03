@@ -18,7 +18,7 @@ mongoose
 
 // render 後端佈署
 const corsOptions = {
-  origin: "https://billboard-five.vercel.app/", // 設定允許的來源
+  origin: "https://billboard-five.vercel.app", // 設定允許的來源
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 204,
   credentials: true,

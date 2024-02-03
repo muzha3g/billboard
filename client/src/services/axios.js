@@ -1,5 +1,5 @@
 import axios from "axios";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 
 const API_URL = "https://billboard-sever.onrender.com/";
 
